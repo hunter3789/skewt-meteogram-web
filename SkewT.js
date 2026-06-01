@@ -967,6 +967,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
                  .on("zoom",zoomed);
 
     svg.call(zoom);
+    svg.on("dblclick.zoom", null);    
 
     function zoomed(){  
       if ((d3.event.type === 'touchstart' || d3.event.type === 'touchmove') && d3.event.touches.length < 2) {
