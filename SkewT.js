@@ -70,10 +70,10 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
       d3.select(this).raise().classed('active', true);
     }
 
-    function skewdragged() {
+    function skewdragged(event) {
       var d = [];
-      d[0] = x.invert(d3.event.x);
-      d[1] = y.invert(d3.event.y);
+      d[0] = x.invert(event.x);
+      d[1] = y.invert(event.y);
 
       var idx = this.getAttribute("data-idx");
       var type = this.getAttribute("data-type");
@@ -104,8 +104,8 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
       d3.select(this).classed('active', false);
     }
 
-    function skewbasedragged() {
-      var base = y.invert(d3.event.y);
+    function skewbasedragged(event) {
+      var base = y.invert(event.y);
       var idx = this.getAttribute("data-idx");
 
       if (base < 300) {
@@ -494,17 +494,23 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
             svg
                 .on("mouseout touchend", function() { tooltip.style("visibility", "hidden"); focus.style("display", "none"); })
                 .on("mousemove touchmove", function () { 
-                    var y0 = y.invert(d3.mouse(this)[1]-margin.top); // get y value of mouse pointer in pressure space
-                    if (d3.mouse(this)[1]-margin.top < 0 || d3.mouse(this)[1]-margin.top > height - margin.top - margin.bottom) {
-                      return;
+                    var pointerCoords = d3.pointer(event, svg.node());
+                    var mouseY = pointerCoords[1] - margin.top;
+                    var mouseX = pointerCoords[0];
+
+                    var y0 = y.invert(mouseY); 
+                    if (mouseY < 0 || mouseY > height - margin.top - margin.bottom) {
+                        return;
                     }
+
                     var i = bisectTemp(pres, y0, 1, pres.length-1);
                     var d0 = pres[i - 1];
                     var d1 = pres[i];
                     var d = y0 - d0 > d1 - y0 ? d1 : d0;
 
-                    var left = parseFloat(d3.mouse(this)[0] + document.getElementById("svg").getBoundingClientRect().left + 10);
-                    var top = parseFloat(d3.mouse(this)[1] + document.getElementById("svg").getBoundingClientRect().top + 10);
+                    var svgRect = document.getElementById("svg").getBoundingClientRect();
+                    var left = parseFloat(pointerCoords[0] + svgRect.left + 10);
+                    var top = parseFloat(pointerCoords[1] + svgRect.top + 10);
 
                     var text = "[ " + d + "hPa ]";
 
@@ -964,18 +970,20 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
                  .scaleExtent([1,5])// <1 means can resize smaller than  original size
                  .translateExtent([[0,0],[w,h]])
                  .extent([[0,0],[w,h]])//view point size
-                 .on("zoom",zoomed);
+                 .on("zoom", function(event) {
+                   zoomed(event); 
+                 });
 
     svg.call(zoom).call(zoom.transform, d3.zoomIdentity);
-    svg.on("dblclick.zoom", null);    
+    svg.on("dblclick.zoom", null);
 
-    function zoomed(){  
-      if ((d3.event.type === 'touchstart' || d3.event.type === 'touchmove') && d3.event.touches.length < 2) {
-        //return;
+    function zoomed(event) {  
+      if ((event.type === 'touchstart' || event.type === 'touchmove') && event.touches.length < 2) {
+        return;
       }
 
-      x.domain(d3.event.transform.rescaleX(xNavi).domain());
-      y.domain(d3.event.transform.rescaleY(yNavi).domain());
+      x.domain(event.transform.rescaleX(xNavi).domain());
+      y.domain(event.transform.rescaleY(yNavi).domain());
       drawBackground();
       plot(clonedData, drawIndices, useEdit);
     }
