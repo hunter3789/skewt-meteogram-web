@@ -4,15 +4,17 @@
  * Original Code - v1.1.0 (2016)
  * David Felix - dfelix@live.com.pt
  * 
- * Updates (2026) by ChangJae Lee
- * -
- * - 
- * - 
+ * Updates (2022 - 2026) by ChangJae Lee
+ * - Background Grid: Expanded dry/moist adiabats and Mixing Ratio lines.
+ * - Thermodynamics Engine: Computed and rendered severe weather indicators (i.e., CAPE, CIN, LFC, EL, LCL, CCL).
+ * - Multi-Profile Overlay: Supported rendering and comparing multiple sounding diagrams simultaneously.
+ * - Dynamic Sounding Editor: Enabled real-time interactive adjustments of base height, temperature, and dewpoint to instantly visualize stability shifts.
+ * - Mobile & Web UX: Optimized tooltips, Zoom and panning.
  *
  * Dependency:
  * d3.v7.min.js from https://d3js.org/
  * 
- */
+**/
 
 /**
 * Initializes a dynamic Skew-T Log-P diagram visualizer.

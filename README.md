@@ -1,10 +1,19 @@
 # skewt-meteogram-web
 
-It is a open-source leaflet plugin which generate the vector tiles(canvas) for geojson data in proj4 coordinates.
-(support only for polygon and multipolygon at this time)
+A web-based dynamic skew-T log-P diagram visualizer.
+
+Original Core Architecture v1.1.0 (2016) by David Felix
+- [GitHub] (https://github.com/dfelix/skewt-js)
+ 
+Refactoring & Features Update (2022 - 2026) by ChangJae Lee
+- Background Grid: Expanded dry/moist adiabats and Mixing Ratio lines.
+- Thermodynamics Engine: Computed and rendered severe weather indicators (i.e., CAPE, CIN, LFC, EL, LCL, CCL).
+- Multi-Profile Overlay: Supported rendering and comparing multiple sounding diagrams simultaneously.
+- Dynamic Sounding Editor: Enabled real-time interactive adjustments of base height, temperature, and dewpoint to instantly visualize stability shifts.
+- Mobile & Web UX: Optimized tooltips, Zoom and panning.
 
 ## Dependency
-- [d3.js] (https://d3js.org/)
+- [d3.js (>= v7)] (https://d3js.org/) 
 
 ## Demo
 
