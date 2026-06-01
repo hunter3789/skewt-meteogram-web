@@ -1,9 +1,16 @@
 /**
- * SkewT v1.1.0
- * 2016 David Felix - dfelix@live.com.pt
+ * SkewT
+ *
+ * Original Code - v1.1.0 (2016)
+ * David Felix - dfelix@live.com.pt
  * 
+ * Updates (2026) by ChangJae Lee
+ * -
+ * - 
+ * - 
+ *
  * Dependency:
- * d3.v3.min.js from https://d3js.org/
+ * d3.v7.min.js from https://d3js.org/
  * 
  */
 
@@ -11,10 +18,10 @@
 * Initializes a dynamic Skew-T Log-P diagram visualizer.
 * @param {string|HTMLElement} chartContainer - The container element or ID where the Skew-T chart will be rendered.
 * @param {string|HTMLElement} tooltipContainer - The container element or ID for the interactive hover data.
+* @param {string|HTMLElement} tableContainer - The container element or ID for the thermodynamic indices table.
 * @param {number} [overlays=1] - The number of sounding profiles to overlay on a single diagram.
-* @param {boolean} [showMenu=true] - Toggle to enable/disable the advanced menu panel (thermodynamic indices, manual sounding editor, reset controls).
 **/
-var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays = 1, showMenu = true) {
+var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays = 1) {
     // Force it to be a number, default to 1 if parsing fails (NaN)
     overlays = Number(overlays) || 1;
     // Clamp the value strictly between 1 and 4
@@ -564,6 +571,12 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         }
     }
     
+    /**
+     * Renders or updates the sounding profiles, wind barbs, and thermodynamic layers on the Skew-T diagram.
+     * @param {Array} s - The sounding dataset array containing vertical profile variables (pressure, temperature, dewpoint, wind) and computed indices.
+     * @param {boolean} [updateDrawIndices=true] - Toggle to draw or hide thermodynamic marker lines and labels (LCL, CCL, LFC, EL) and polygon overlays (CAPE/CIN).
+     * @param {boolean} [updateUseEdit=false] - Toggle interactive editing mode. If true, renders draggable handles (circles/lines) to manually alter the temperature and dewpoint profiles.
+     */
     var plot = function(s, updateDrawIndices = true, updateUseEdit = false){
         drawIndices = updateDrawIndices;
         useEdit = updateUseEdit;

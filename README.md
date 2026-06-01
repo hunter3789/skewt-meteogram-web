@@ -21,42 +21,29 @@ It is a open-source leaflet plugin which generate the vector tiles(canvas) for g
 <script src="[path to js]/skewt_function.js.js"></script>
 ```
 
-## Usage
-0. Slice geojson data by longitude (**if needed, for certain projection, usually don't need**)
-```
-var newGeojson = sliceGeojson(geojson, longitude);
-
-// projection(example) : "+proj=eqc +lat_0=0 +lat_ts=0 +lon_0=126 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
-```
-1. **Calculate min/max bounds of each polygons from geojson**
+## Usage - Skew-T
+1. **Initializes a dynamic Skew-T Log-P diagram **
 ```
 /**
 * Initializes a dynamic Skew-T Log-P diagram visualizer.
 * @param {string|HTMLElement} chartContainer - The container element or ID where the Skew-T chart will be rendered.
 * @param {string|HTMLElement} tooltipContainer - The container element or ID for the interactive hover data.
+* @param {string|HTMLElement} tableContainer - The container element or ID for the thermodynamic indices table.
 * @param {number} [overlays=1] - The number of sounding profiles to overlay on a single diagram.
-* @param {boolean} [showMenu=true] - Toggle to enable/disable the advanced menu panel (thermodynamic indices, manual sounding editor, reset controls).
 **/
 var skewt = new SkewT(chartContainer, tooltipContainer, tableContainer, overlays);
+```
 
+2. **Renders or updates the Skew-T diagram**
+```
 /**
-* Initializes a dynamic Skew-T Log-P diagram visualizer.
-* @param {string|HTMLElement} chartContainer - The container element or ID where the Skew-T chart will be rendered.
-* @param {string|HTMLElement} tooltipContainer - The container element or ID for the interactive hover data.
-* @param {number} [overlays=1] - The number of sounding profiles to overlay on a single diagram.
-* @param {boolean} [showMenu=true] - Toggle to enable/disable the advanced menu panel (thermodynamic indices, manual sounding editor, reset controls).
-**/
-skewt.plot(skew_data, drawIndices, useEdit);
+* Renders or updates the sounding profiles, wind barbs, and thermodynamic layers on the Skew-T diagram.
+* @param {Array} s - The sounding dataset array containing vertical profile variables (pressure, temperature, dewpoint, wind) and computed indices.
+* @param {boolean} [updateDrawIndices=true] - Toggle to draw or hide thermodynamic marker lines and labels (LCL, CCL, LFC, EL) and polygon overlays (CAPE/CIN).
+* @param {boolean} [updateUseEdit=false] - Toggle interactive editing mode. If true, renders draggable handles (circles/lines) to manually alter the temperature and dewpoint profiles.
+*/
+skewt.plot(s, drawIndices, useEdit);
 ```
-2. **Draw Tiles (draw polygons in which boundaries and tiles overlap.)**
-
-```
-L.geoJson.projvt(geojson, options).addTo(map);
-
-// options(example) : {tileSize:512, pane:pane, color: "black", fillColor: "#ffffe5", weight: 1, simplify:true, tolerance:1}
-```
-- **select proper tileSize** for better performance
-- simplify option is for polyline simplification, tolerance option is smooth parameter.
 
 ## Data (example)
 
