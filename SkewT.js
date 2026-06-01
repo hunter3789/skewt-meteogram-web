@@ -717,6 +717,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
               .attr("x2", w)
               .attr("y1", y(clonedData[idx].indices.tmpBase))
               .attr("y2", y(clonedData[idx].indices.tmpBase))
+              .attr("z-index", 10)
               .attr("stroke-width", 2)
               .style('cursor', 'pointer')
               .attr('data-idx', idx)
@@ -968,6 +969,10 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
     svg.call(zoom);
 
     function zoomed(){  
+      if ((d3.event.type === 'touchstart' || d3.event.type === 'touchmove') && d3.event.touches.length < 2) {
+        return;
+      }
+
       x.domain(d3.event.transform.rescaleX(xNavi).domain());
       y.domain(d3.event.transform.rescaleY(yNavi).domain());
       drawBackground();
