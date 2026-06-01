@@ -971,7 +971,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
 
     function zoomed(){  
       if ((d3.event.type === 'touchstart' || d3.event.type === 'touchmove') && d3.event.touches.length < 2) {
-        return;
+        //return;
       }
 
       x.domain(d3.event.transform.rescaleX(xNavi).domain());
