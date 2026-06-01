@@ -30,7 +30,23 @@ var newGeojson = sliceGeojson(geojson, longitude);
 ```
 1. **Calculate min/max bounds of each polygons from geojson**
 ```
-getGeojsonBounds(map, geojson);
+/**
+* Initializes a dynamic Skew-T Log-P diagram visualizer.
+* @param {string|HTMLElement} chartContainer - The container element or ID where the Skew-T chart will be rendered.
+* @param {string|HTMLElement} tooltipContainer - The container element or ID for the interactive hover data.
+* @param {number} [overlays=1] - The number of sounding profiles to overlay on a single diagram.
+* @param {boolean} [showMenu=true] - Toggle to enable/disable the advanced menu panel (thermodynamic indices, manual sounding editor, reset controls).
+**/
+var skewt = new SkewT(chartContainer, tooltipContainer, tableContainer, overlays);
+
+/**
+* Initializes a dynamic Skew-T Log-P diagram visualizer.
+* @param {string|HTMLElement} chartContainer - The container element or ID where the Skew-T chart will be rendered.
+* @param {string|HTMLElement} tooltipContainer - The container element or ID for the interactive hover data.
+* @param {number} [overlays=1] - The number of sounding profiles to overlay on a single diagram.
+* @param {boolean} [showMenu=true] - Toggle to enable/disable the advanced menu panel (thermodynamic indices, manual sounding editor, reset controls).
+**/
+skewt.plot(skew_data, drawIndices, useEdit);
 ```
 2. **Draw Tiles (draw polygons in which boundaries and tiles overlap.)**
 
@@ -41,6 +57,9 @@ L.geoJson.projvt(geojson, options).addTo(map);
 ```
 - **select proper tileSize** for better performance
 - simplify option is for polyline simplification, tolerance option is smooth parameter.
+
+## Data (example)
+
 
 ## License
 
