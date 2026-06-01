@@ -4,9 +4,7 @@ It is a open-source leaflet plugin which generate the vector tiles(canvas) for g
 (support only for polygon and multipolygon at this time)
 
 ## Dependency
-- [leaflet] (https://leafletjs.com/)
-- [proj4js] (https://github.com/proj4js/proj4js)
-- [proj4leaflet] (https://kartena.github.io/Proj4Leaflet/)
+- [d3.js] (https://d3js.org/)
 
 ## Demo
 
