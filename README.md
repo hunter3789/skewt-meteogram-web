@@ -22,7 +22,8 @@ It is a open-source leaflet plugin which generate the vector tiles(canvas) for g
 - Quick use:
 
 ```js
-<script src="[path to js]/leaflet-geojson-proj4-vectortile.js"></script>
+<script src="[path to js]/SkewT.js.js"></script>
+<script src="[path to js]/skewt_function.js.js"></script>
 ```
 
 ## Usage
