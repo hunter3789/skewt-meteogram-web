@@ -1036,7 +1036,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
     }
 
     function selectTable(idx) {
-      if (idx >= clonedData.length) {
+      if (clonedData[idx] == undefined || clonedData[idx].variables == undefined) {
         for (var i=0; i<clonedData.length; i++) {
           if (clonedData[i].variables != undefined) {
             idx = i;
@@ -1054,7 +1054,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
           el[i].classList.remove("selected");
         }
 
-        if (i >= clonedData.length) {
+        if (clonedData[i] == undefined || clonedData[i].variables == undefined) {
           el[i].style.display = "none";
         }
         else {
