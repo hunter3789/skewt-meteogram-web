@@ -5,6 +5,9 @@ A web-based dynamic skew-T log-P diagram visualizer.
 ## Note
 Original Core Architecture v1.1.0 (2016) by David Felix
 - [GitHub] (https://github.com/dfelix/skewt-js)
+
+Also inspired by SHARPpy.
+- [Document] (https://sharppy.github.io/SHARPpy/index.html)
  
 Refactoring & Features Update (2022 - 2026) by ChangJae Lee
 - Background Grid: Expanded dry/moist adiabats and Mixing Ratio lines.

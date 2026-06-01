@@ -1,3 +1,10 @@
+/**
+ * SkewT Indices Calculator
+ *
+ * Written by ChangJae Lee (2022 - 2026)
+ * 
+**/
+
 if (!Math.log10) {
   Math.log10 = Math.log10 || function (x) {
     return Math.log(x) * Math.LOG10E;
