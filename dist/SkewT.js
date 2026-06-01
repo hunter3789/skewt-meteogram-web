@@ -6,7 +6,7 @@
  * 
  * Updates (2022 - 2026) by ChangJae Lee
  * - Background Grid: Expanded dry/moist adiabats and Mixing Ratio lines.
- * - Thermodynamics Engine: Computed and rendered severe weather indicators (i.e., CAPE, CIN, LFC, EL, LCL, CCL).
+ * - Thermodynamics: Computed and rendered severe weather indicators (i.e., CAPE, CIN, LFC, EL, LCL, CCL).
  * - Multi-Profile Overlay: Supported rendering and comparing multiple sounding diagrams simultaneously.
  * - Dynamic Sounding Editor: Enabled real-time interactive adjustments of base height, temperature, and dewpoint to instantly visualize stability shifts.
  * - Mobile & Web UX: Optimized tooltips, Zoom and panning.
@@ -104,9 +104,8 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         }
       }
 
-      plot(clonedData, drawIndices, useEdit);
       selectedIndex = idx;
-      selectTable(idx);
+      plot(clonedData, drawIndices, useEdit);
     }
 
     function skewdragended(d) {
@@ -126,9 +125,8 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
 
       clonedData[idx].indices.tmpBase = base;
 
-      plot(clonedData, drawIndices, useEdit);
       selectedIndex = idx;
-      selectTable(idx);
+      plot(clonedData, drawIndices, useEdit);
     }
 
     //local functions   
@@ -619,6 +617,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
           var skewtlines2 = [];
           skewtlines2.push(skewtline2);
 
+          // wet-bulb temperature
           calcTw(clonedData[idx].variables);
 
           if (cnt == 1) {
