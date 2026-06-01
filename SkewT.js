@@ -966,7 +966,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
                  .extent([[0,0],[w,h]])//view point size
                  .on("zoom",zoomed);
 
-    svg.call(zoom);
+    svg.call(zoom).call(zoom.transform, d3.zoomIdentity);
     svg.on("dblclick.zoom", null);    
 
     function zoomed(){  
