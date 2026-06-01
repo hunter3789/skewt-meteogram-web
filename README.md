@@ -8,7 +8,7 @@ It is a open-source leaflet plugin which generate the vector tiles(canvas) for g
 
 ## Demo
 
-[DEMO] (https://hunter3789.github.io/leaflet-geojson-proj4-vectortile/example/demo.html)
+[DEMO] (https://hunter3789.github.io/skewt-meteogram-web/demo.html)
 ![demo](demo.gif)
 
 ## Installation and setup
