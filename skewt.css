@@ -1,0 +1,78 @@
+.temp {
+  fill: none;
+  stroke-width: 2px;
+}
+.dwpt {
+  fill: none;
+  stroke-dasharray: 3;
+  stroke-width: 2px;
+}
+.tw {
+  fill: none;
+  stroke-width: 1px;
+}
+.skline   { stroke-width: 1.8px; opacity: 0.8;}
+.mean     { stroke-width: 2.5px; }
+
+.gridline, .tempzero {
+   stroke: #dfdfdf;
+   stroke-width: 0.75px;
+   fill: none;
+}
+.tempzero { stroke: #aaa; stroke-width: 1.25px; }
+
+.templine {
+   stroke: #a2834f;
+   stroke-width: 0.75px;
+   fill: none;
+}
+
+.tempbold {
+   stroke: #a2834f;
+   stroke-width: 1.25px;
+   fill: none;
+}
+
+.dryline {
+   stroke: #a2834f;
+   stroke-width: 0.75px;
+   fill: none;
+}
+
+.moistline {
+   stroke: lime;
+   stroke-width: 0.5px;
+   fill: none;
+}
+
+.mrline {
+   stroke: green;
+   stroke-width: 0.5px;
+   stroke-dasharray: 3;
+   fill: none;
+}
+
+.focusline {
+   stroke: black;
+   stroke-width: 1px;
+   fill: none;
+}
+
+.skewtext { font-size:10px; }
+
+.skewtextbold { font-family:'Verdana'; font-size:10px; font-weight:700;}
+
+.windbarb { stroke: #000; stroke-width: 0.75px; fill: none;}
+
+.select-button {
+  border-radius:4px;
+  background-color:#ddd;
+  padding:4px;
+  font-weight:900;
+  cursor:pointer;
+  user-select:none;
+}
+
+.select-button.selected {
+  background-color:skyblue;
+}

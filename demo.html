@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link rel="stylesheet" href="./skewt.css" />
+  <script type="text/javascript" src="./d3.v5.min.js"></script>
+  <script type="text/javascript" src="./SkewT.js"></script>
+  <script type="text/javascript" src="./skewt_function.js"></script>
+
+  <style>
+    html,
+    body {
+      height: 95%;
+      margin: 0px;
+      padding: 0px;
+      color: #222;
+      list-style: none;
+      text-decoration: none;
+      font-family: "Verdana", Helvetica, sans-serif;
+      box-sizing: border-box;
+      font-size: 11px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div style="height: 95%; width: 100vw;">
+    <div style='display:flex; margin:10px;'>
+      <div id="data-single" class='select-button selected' onclick="skew_data = JSON.parse(JSON.stringify(data_select('single'))); skewt.plot(skew_data, drawIndices, useEdit);">Single</div>
+      <div style='min-width:10px;'></div>
+      <div id="data-double" class='select-button' onclick="skew_data = JSON.parse(JSON.stringify(data_select('double'))); skewt.plot(skew_data, drawIndices, useEdit);">Double</div>
+      <div style='min-width:40px;'></div>
+
+      <div id='skew_index' class='select-button selected' onclick='skew_ext(this);'><i class="fas fa-eye"></i>Indices</div>
+      <div style='min-width:10px;'></div>
+      <div id='skew_edit' class='select-button' onclick='skew_ext(this);'><i class="fas fa-edit"></i>Edit</div>
+      <div style='min-width:10px;'></div>
+      <div id='skew_reset' class='select-button' onclick='skew_ext(this);'><i class="fas fa-retweet"></i>Reset</div>
+    </div>
+    <div id="skew"></div>
+    <div id="tooltip"></div>
+    <div id="table"></div>
+  </div>
+
+
+  <script>
+    var variables1 = 
+            [
+                {
+                    "pres": "SFC",
+                    "ps": "984.5",
+                    "ta": "20.0",
+                    "td": "11.1"
+                },
+                {
+                    "pres": "1000",
+                    "ta": "19.7",
+                    "td": "11.7",
+                    "vec": "257",
+                    "wsd": "2.1",
+                    "gh": "92.0"
+                },
+                {
+                    "pres": "950",
+                    "ta": "17.5",
+                    "td": "8.7",
+                    "vec": "324",
+                    "wsd": "3.6",
+                    "gh": "529.9"
+                },
+                {
+                    "pres": "925",
+                    "ta": "16.6",
+                    "td": "7.3",
+                    "vec": "339",
+                    "wsd": "6.4",
+                    "gh": "757.2"
+                },
+                {
+                    "pres": "900",
+                    "ta": "15.5",
+                    "td": "4.7",
+                    "vec": "345",
+                    "wsd": "9.2",
+                    "gh": "990.1"
+                },
+                {
+                    "pres": "850",
+                    "ta": "13.4",
+                    "td": "-4.3",
+                    "vec": "346",
+                    "wsd": "12.2",
+                    "gh": "1472.4"
+                },
+                {
+                    "pres": "800",
+                    "ta": "11.9",
+                    "td": "-9.9",
+                    "vec": "338",
+                    "wsd": "12.4",
+                    "gh": "1980.3"
+                },
+                {
+                    "pres": "700",
+                    "ta": "8.1",
+                    "td": "-28.8",
+                    "vec": "321",
+                    "wsd": "11.0",
+                    "gh": "3088.6"
+                },
+                {
+                    "pres": "600",
+                    "ta": "3.7",
+                    "td": "-32.3",
+                    "vec": "293",
+                    "wsd": "19.2",
+                    "gh": "4346.7"
+                },
+                {
+                    "pres": "500",
+                    "ta": "-3.6",
+                    "td": "-8.3",
+                    "vec": "284",
+                    "wsd": "24.6",
+                    "gh": "5807.5"
+                },
+                {
+                    "pres": "400",
+                    "ta": "-12.9",
+                    "td": "-23.6",
+                    "vec": "275",
+                    "wsd": "30.0",
+                    "gh": "7539.9"
+                },
+                {
+                    "pres": "300",
+                    "ta": "-27.6",
+                    "td": "-30.4",
+                    "vec": "274",
+                    "wsd": "35.3",
+                    "gh": "9669.4"
+                },
+                {
+                    "pres": "250",
+                    "ta": "-36.4",
+                    "td": "-46.7",
+                    "vec": "275",
+                    "wsd": "38.4",
+                    "gh": "10959.3"
+                },
+                {
+                    "pres": "200",
+                    "ta": "-48.0",
+                    "td": "-58.6",
+                    "vec": "277",
+                    "wsd": "40.1",
+                    "gh": "12466.5"
+                },
+                {
+                    "pres": "150",
+                    "ta": "-62.2",
+                    "td": "-68.7",
+                    "vec": "276",
+                    "wsd": "37.2",
+                    "gh": "14302.7"
+                },
+                {
+                    "pres": "100",
+                    "ta": "-73.2",
+                    "td": "-81.5",
+                    "vec": "270",
+                    "wsd": "19.9",
+                    "gh": "16737.5"
+                }
+            ];
+
+    var variables2 = [
+                {
+                    "pres": "SFC",
+                    "ps": "984.5",
+                    "ta": "19.8",
+                    "td": "12.9"
+                },
+                {
+                    "pres": "1000",
+                    "ta": "19.5",
+                    "td": "13.1",
+                    "vec": "282",
+                    "wsd": "2.8",
+                    "gh": "92.0"
+                },
+                {
+                    "pres": "950",
+                    "ta": "17.2",
+                    "td": "9.9",
+                    "vec": "319",
+                    "wsd": "3.9",
+                    "gh": "529.5"
+                },
+                {
+                    "pres": "925",
+                    "ta": "16.6",
+                    "td": "8.0",
+                    "vec": "338",
+                    "wsd": "6.5",
+                    "gh": "756.7"
+                },
+                {
+                    "pres": "900",
+                    "ta": "15.5",
+                    "td": "6.3",
+                    "vec": "348",
+                    "wsd": "8.7",
+                    "gh": "989.6"
+                },
+                {
+                    "pres": "850",
+                    "ta": "13.1",
+                    "td": "-2.3",
+                    "vec": "358",
+                    "wsd": "11.1",
+                    "gh": "1472.0"
+                },
+                {
+                    "pres": "800",
+                    "ta": "11.5",
+                    "td": "-7.1",
+                    "vec": "346",
+                    "wsd": "11.1",
+                    "gh": "1979.3"
+                },
+                {
+                    "pres": "700",
+                    "ta": "8.1",
+                    "td": "-26.6",
+                    "vec": "321",
+                    "wsd": "11.0",
+                    "gh": "3087.2"
+                },
+                {
+                    "pres": "600",
+                    "ta": "3.2",
+                    "td": "-40.5",
+                    "vec": "296",
+                    "wsd": "17.6",
+                    "gh": "4344.3"
+                },
+                {
+                    "pres": "500",
+                    "ta": "-3.3",
+                    "td": "-9.5",
+                    "vec": "282",
+                    "wsd": "25.0",
+                    "gh": "5804.0"
+                },
+                {
+                    "pres": "400",
+                    "ta": "-12.7",
+                    "td": "-23.6",
+                    "vec": "278",
+                    "wsd": "29.7",
+                    "gh": "7538.1"
+                },
+                {
+                    "pres": "300",
+                    "ta": "-27.2",
+                    "td": "-32.6",
+                    "vec": "272",
+                    "wsd": "36.3",
+                    "gh": "9668.2"
+                },
+                {
+                    "pres": "250",
+                    "ta": "-36.4",
+                    "td": "-44.7",
+                    "vec": "275",
+                    "wsd": "38.9",
+                    "gh": "10959.2"
+                },
+                {
+                    "pres": "200",
+                    "ta": "-48.2",
+                    "td": "-59.4",
+                    "vec": "277",
+                    "wsd": "39.8",
+                    "gh": "12465.9"
+                },
+                {
+                    "pres": "150",
+                    "ta": "-62.2",
+                    "td": "-69.4",
+                    "vec": "274",
+                    "wsd": "36.4",
+                    "gh": "14302.8"
+                },
+                {
+                    "pres": "100",
+                    "ta": "-72.7",
+                    "td": "-81.6",
+                    "vec": "266",
+                    "wsd": "20.2",
+                    "gh": "16739.1"
+                }
+            ];
+
+    var drawIndices = true;
+    var useEdit = false;
+    var skewt = new SkewT('#skew','#tooltip','#table',2);
+    var skew_data = data_select('single');
+    skewt.plot(skew_data, drawIndices, useEdit);
+
+    function data_select(type)
+    {
+      switch (type)
+      {
+        case 'double':
+          document.getElementById('data-double').classList.add("selected");
+          document.getElementById('data-single').classList.remove("selected");
+          return [{"variables": variables1, "indices": {}}, {"variables": variables2, "indices": {}}]
+          break;
+        case 'single':
+          document.getElementById('data-single').classList.add("selected");
+          document.getElementById('data-double').classList.remove("selected");
+          return [{"variables": variables1, "indices": {}}]
+          break;
+      }
+    }
+
+    function skew_ext(node)
+    {
+      if (node.id.indexOf("reset") == -1) {
+        if (node.classList.contains("selected")) {
+          node.classList.remove("selected");
+        }
+        else {
+          node.classList.add("selected");
+        }
+      }
+
+      if (document.getElementById("skew_index").classList.contains("selected")) {
+        drawIndices = true;
+      }
+      else {
+        drawIndices = false;
+      }
+
+      if (document.getElementById("skew_edit").classList.contains("selected")) {
+        useEdit = true;
+      }
+      else {
+        useEdit = false;
+      }
+
+      skewt.plot(skew_data, drawIndices, useEdit);
+    }
+  </script>
+</body>
+
+</html>
