@@ -22,7 +22,7 @@ It is a open-source leaflet plugin which generate the vector tiles(canvas) for g
 ```
 
 ## Usage - Skew-T
-1. **Initializes a dynamic Skew-T Log-P diagram **
+1. **Initializes a dynamic Skew-T Log-P diagram**
 ```
 /**
 * Initializes a dynamic Skew-T Log-P diagram visualizer.
@@ -46,7 +46,39 @@ skewt.plot(s, drawIndices, useEdit);
 ```
 
 ## Data (example)
-
+```
+[
+  {
+    // meteorological variables
+    "variables": [{
+                    "pres": 1000, // pressure level (hPa or mb)
+                    "ta": 29.2,   // temperature (celsius)
+                    "td": 23.2,   // dew-point temperature (celsius)
+                    "vec": 215,   // wind vector (degree)
+                    "wsd": 3.2,   // wind speed (m/s)
+                    "gh": 110.7   // geopotential height (gpm) (optional)
+                },
+                {
+                    "pres": 950,
+                    "ta": 24.8,
+                    "td": 21.7,
+                    "vec": 214,
+                    "wsd": 5.3,
+                    "gh": 565.8
+                },
+                ...,
+                // surface variables (optional)
+                {
+                    "pres": "SFC",
+                    "ps": "1000.8", // station pressure (hPa or mb)
+                    "ta": "30.3",   // temperature (celsius)
+                    "td": "24.1"    // dew-point temperature (celsius)
+                }],
+    // thermodynamic indices
+    "indices": {}
+  }
+]
+```
 
 ## License
 
