@@ -713,7 +713,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
 
               skewtgroup.append("line")
               .attr("stroke", color[idx])
-              .attr("x1", 0)
+              .attr("x1", -20)
               .attr("x2", w)
               .attr("y1", y(clonedData[idx].indices.tmpBase))
               .attr("y2", y(clonedData[idx].indices.tmpBase))
@@ -1002,7 +1002,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         tableGroup.id = "skew-table";
         tableGroup.style.marginTop = "10px";
         tableGroup.style.marginLeft = "10px";
-        tableGroup.style.width = "400px";
+        tableGroup.style.width = "360px";
         item.append(tableGroup);
       }
     }
@@ -1057,7 +1057,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         el.innerText = "BASE";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1071,14 +1071,14 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
 
         el.innerText = text;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
         el.innerText = "LCL";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1096,14 +1096,14 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         }
         el.innerText = text;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
         el.innerText = "CCL";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1121,7 +1121,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         }
         el.innerText = text;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         item.appendChild(divGroup);
@@ -1135,7 +1135,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         el.innerText = "LFC";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1153,14 +1153,14 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         }
         el.innerText = text;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
         el.innerText = "EL";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1178,14 +1178,14 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         }
         el.innerText = text;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
         el.innerText = "CVT";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1198,7 +1198,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         }
         el.innerText = text;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         item.appendChild(divGroup);
@@ -1212,7 +1212,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         el.innerText = "CAPE";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1230,14 +1230,14 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         }
         el.innerText = text;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
         el.innerText = "CIN";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1256,14 +1256,14 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         el.innerText = text;
 
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
         el.innerText = "TPW";
         el.style.fontWeight = 900;
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         var el = document.createElement("div");
@@ -1277,7 +1277,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
         el.innerText = text;
 
         el.style.textAlign = "center";
-        el.style.minWidth = "65px";
+        el.style.minWidth = "58px";
         divGroup.appendChild(el); 
 
         item.appendChild(divGroup);
