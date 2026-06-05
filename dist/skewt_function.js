@@ -342,7 +342,7 @@ function calcLfc(data, lcl)
           DTMP=BTEMP;
           UPMB=parseFloat(data[n].pres);
           UTMP=ATEMP;
-          var chk = true;
+          chk = true;
           break;
         }
       }
@@ -911,7 +911,7 @@ function calcCin(data, lcl, ccl, lfc, el)
           break;
         }
 
-        if ((DIFF_I*DIFF_J) <= 0) {
+        if ((DIFF_I*DIFF_J) <= 0 || (n == 1)) {
             DRATE=(ATEMP-BTEMP)/(-parseFloat(data[n].pres)+parseFloat(data[n-1].pres));
             DPMB=parseFloat(data[n-1].pres);
             DTMP=BTEMP;
@@ -950,7 +950,7 @@ function calcCin(data, lcl, ccl, lfc, el)
   var ICHK;
   var Tenv = [], Penv = [], Henv = [], Tpcl = [];
   kk=0;
-  if (PLBL == 1000.) {
+  if (PLBL == parseInt(data[0].pres)) {
     ICHK=-1;
     for (var k=0; k<data.length; k++) {
       if (parseFloat(data[k].pres) < PLBL) {
