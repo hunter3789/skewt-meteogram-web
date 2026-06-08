@@ -880,7 +880,6 @@ function calcCin(data, lcl, ccl, lfc, el)
     T=DT+(parseFloat(data[0].ta)+C2K)/PPP;
 
     if (IDRY == 0) {
-      PSATM[IDRY] = lcl.p;
       TSATM[IDRY] = lcl.t;
       DT = lcl.t - T;
     }
@@ -910,11 +909,11 @@ function calcCin(data, lcl, ccl, lfc, el)
     DRATE = -(ATEMP-BTEMP)/(-parseFloat(data[n].pres)+parseFloat(data[n-1].pres));
 
     if (parseFloat(data[n].pres) <= lcl.p) {
-      var refPres = lcl.p;
-      ATEMP = ATEMP + DRATE*(-parseFloat(data[n].pres) + lcl.p);
+      var refPres = parseInt(lcl.p);
+      ATEMP = ATEMP + DRATE*(-parseFloat(data[n].pres) + parseFloat(refPres));
     }
     else {
-      var refPres = data[n].pres;
+      var refPres = parseInt(data[n].pres);
     }
 
     for (var m=0; m<IDRY; m++) {
