@@ -847,6 +847,11 @@ function calcCin(data, lcl, ccl, lfc, el)
   var TSUM1=Sum_lfc;
 
   kk = Tenv.length-1;
+  var tr_Tlcl=2.*(Tpcl[kk]-Tenv[kk])/(lcl.t+Tenv[kk]);
+  var Sum_lcl=0.5*(Henv[kk]-Hlcl)*tr_Tlcl*9.8;
+  TSUM1=Sum_lfc+Sum_lcl;
+
+  kk = Tenv.length-1;
   var delh, delt, avet, sum;
   for (var k=0; k<kk; k++) {
     delh=Henv[k]-Henv[k+1];
@@ -900,22 +905,32 @@ function calcCin(data, lcl, ccl, lfc, el)
       continue;
     }
 
-    ATEMP = parseFloat(data[n-1].ta);
-    BTEMP = parseFloat(data[n].ta);
+    ATEMP = parseFloat(data[n].ta);
+    BTEMP = parseFloat(data[n-1].ta);
+    DRATE = -(ATEMP-BTEMP)/(-parseFloat(data[n].pres)+parseFloat(data[n-1].pres));
+
+    if (parseFloat(data[n].pres) <= lcl.p) {
+      var refPres = lcl.p;
+      ATEMP = ATEMP + DRATE*(-parseFloat(data[n].pres) + lcl.p);
+    }
+    else {
+      var refPres = data[n].pres;
+    }
 
     for (var m=0; m<IDRY; m++) {
-      if (parseInt(data[n].pres) == parseInt(PSATM[m])) {
-        DIFF_J=BTEMP-(TSATM[m]-C2K);
+      if (parseInt(refPres) == parseInt(PSATM[m])) {
+        DIFF_J=ATEMP-(TSATM[m]-C2K);
         for (var l=m+1; l<IDRY; l++) {
-          DIFF_I=ATEMP-(TSATM[l]-C2K);
-          break;
+          if (parseInt(data[n-1].pres) == parseInt(PSATM[l])) {
+            DIFF_I = BTEMP - (TSATM[l]-C2K);
+            break;
+          }       
         }
 
         if ((DIFF_I*DIFF_J) <= 0 || (n == 1)) {
-            DRATE=(ATEMP-BTEMP)/(-parseFloat(data[n].pres)+parseFloat(data[n-1].pres));
             DPMB=parseFloat(data[n-1].pres);
             DTMP=BTEMP;
-            UPMB=parseFloat(data[n].pres);
+            UPMB=refPres;
             UTMP=ATEMP;
             chk = true;
             break;
@@ -929,17 +944,18 @@ function calcCin(data, lcl, ccl, lfc, el)
   }
 
   if (chk) {
-    VTEMP=DTMP;
+    VTEMP=UTMP;
     DTRS=1.;
 
     for (var m=0; m<IDRY; m++) {
       if (parseInt(PSATM[m])<=parseInt(DPMB) && parseInt(PSATM[m])>=parseInt(UPMB)) {
         DIFF = Math.abs(VTEMP-(TSATM[m]-C2K));
-        if (DIFF < DTRS) {
+        if (VTEMP <= (TSATM[m]-C2K)) {
           DTRS=DIFF;
           PLBL=PSATM[m];
           TLBL=TSATM[m];
           MXBL=m;
+          break;
         }
         VTEMP=VTEMP+DRATE;
       }
@@ -1047,11 +1063,13 @@ function calcCin(data, lcl, ccl, lfc, el)
 
   // CALCULATE CIN FROM LBL TO LCL
   var Sum_lbl=0.;
-
   var tr_Tlbl=2*(Tpcl[0]-Tenv[0])/(TLBL+Tenv[0]);
   var Sum_lbl=0.5*(Henv[0]-HLBL)*tr_Tlbl*9.8;
-  if (PLBL < 1000.) Sum_lbl=(Henv[0]-HLBL)*tr_Tlbl*9.8;
-  var TSUM2=Sum_lbl;
+
+  kk = Tenv.length-1;
+  var tr_Tlcl=2.*(Tpcl[kk]-Tenv[kk])/(lcl.t+Tenv[kk]);
+  var Sum_lcl=0.5*(Henv[kk]-Hlcl)*tr_Tlcl*9.8;
+  var TSUM2=Sum_lbl+Sum_lcl;
 
   kk = Tenv.length-1;
   for (k=0; k<kk; k++) {
@@ -1091,6 +1109,9 @@ function calcCin(data, lcl, ccl, lfc, el)
     polygon.push(d);
 
     for (var j=IDRY-1; j>=0; j--) {
+      if (PSATM[j] >= PLBL) {
+        continue;
+      }
       var d = {};
       d.ta = TSATM[j] - C2K;
       d.pres = PSATM[j];
