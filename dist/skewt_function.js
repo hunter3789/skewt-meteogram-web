@@ -317,6 +317,7 @@ function calcLfc(data, lcl)
     if (icnt == 0) {
       ATEMP = parseFloat(data[n].ta);
       BTEMP = TEMPLCL;
+      BTEMP = lcl.t - C2K;
       PMBMI = lcl.p;
     }
     else {
