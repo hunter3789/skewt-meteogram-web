@@ -817,7 +817,7 @@ function calcCin(data, lcl, ccl, lfc, el)
 
   if (Hupr != AMIS && Hlow != AMIS) {
     delP=(Math.log(lfc.p)-Math.log(Plow))/(Math.log(Pupr)-Math.log(Plow))
-    Hel=Hlow+(Hupr-Hlow)*delP;
+    Hlfc=Hlow+(Hupr-Hlow)*delP;
   }
 
   for (var k=0; k<data.length; k++) {
@@ -838,7 +838,7 @@ function calcCin(data, lcl, ccl, lfc, el)
 
   if (Hupr != AMIS && Hlow != AMIS) {
     delP=(Math.log(lcl.p)-Math.log(Plow))/(Math.log(Pupr)-Math.log(Plow))
-    Hlfc=Hlow+(Hupr-Hlow)*delP;
+    Hlcl=Hlow+(Hupr-Hlow)*delP;
   }
 
   // CALCULATE CIN FROM LCL TO LFC
@@ -846,11 +846,6 @@ function calcCin(data, lcl, ccl, lfc, el)
   var tr_Tlfc=2.*(Tpcl[0]-Tenv[0])/(lfc.t+Tenv[0]);
   var Sum_lfc=0.5*(Hlfc-Henv[0])*tr_Tlfc*9.8;
   var TSUM1=Sum_lfc;
-
-  kk = Tenv.length-1;
-  var tr_Tlcl=2.*(Tpcl[kk]-Tenv[kk])/(lcl.t+Tenv[kk]);
-  var Sum_lcl=0.5*(Henv[kk]-Hlcl)*tr_Tlcl*9.8;
-  TSUM1=Sum_lfc+Sum_lcl;
 
   kk = Tenv.length-1;
   var delh, delt, avet, sum;
@@ -1053,6 +1048,7 @@ function calcCin(data, lcl, ccl, lfc, el)
       }
       Pupr=parseFloat(data[k].pres);
       KCHK=k;
+      break;
     }
   }
 
@@ -1065,11 +1061,8 @@ function calcCin(data, lcl, ccl, lfc, el)
   var Sum_lbl=0.;
   var tr_Tlbl=2*(Tpcl[0]-Tenv[0])/(TLBL+Tenv[0]);
   var Sum_lbl=0.5*(Henv[0]-HLBL)*tr_Tlbl*9.8;
-
-  kk = Tenv.length-1;
-  var tr_Tlcl=2.*(Tpcl[kk]-Tenv[kk])/(lcl.t+Tenv[kk]);
-  var Sum_lcl=0.5*(Henv[kk]-Hlcl)*tr_Tlcl*9.8;
-  var TSUM2=Sum_lbl+Sum_lcl;
+  if (PLBL < 1000.) Sum_lbl=(Henv[0]-HLBL)*tr_Tlbl*9.8;
+  var TSUM2=Sum_lbl;
 
   kk = Tenv.length-1;
   for (k=0; k<kk; k++) {
@@ -1151,6 +1144,9 @@ function calcTw(data) {
 
   for (var k=0; k<data.length; k++) {
     if (data[k].pres == "SFC") {
+      if (data[k].ps == undefined) {
+        continue;
+      }
       var pres = parseFloat(data[k].ps);
     }
     else if (parseFloat(data[k].pres) < 300 || data[k].ta <= -999 || data[k].td <= -999) {
