@@ -961,7 +961,7 @@ function calcCin(data, lcl, ccl, lfc, el)
   var ICHK;
   var Tenv = [], Penv = [], Henv = [], Tpcl = [];
   kk=0;
-  if (PLBL == parseInt(data[0].pres)) {
+  if (parseInt(PLBL) == parseInt(data[0].pres)) {
     ICHK=-1;
     for (var k=0; k<data.length; k++) {
       if (parseFloat(data[k].pres) < PLBL) {
