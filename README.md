@@ -1,6 +1,6 @@
 # skewt-meteogram-web
 
-A web-based dynamic skew-T log-P diagram visualizer.
+A web-based dynamic skew-T log-P diagram and meteogram visualizer.
 
 ## Note
 Original Core Architecture v1.1.0 (2016) by David Felix
@@ -17,21 +17,34 @@ Refactoring & Features Update (2022 - 2026) by ChangJae Lee
 - Mobile & Web UX: Optimized tooltips, Zoom and panning.
 
 ## Dependency
-- [d3.js (>= v7)] (https://d3js.org/) 
+- [d3.js (>= v7)] (https://d3js.org/)
+- [MarchingSquares.js] (https://github.com/RaumZeit/MarchingSquares.js/) 
 
 ## Demo
 
 [DEMO] (https://hunter3789.github.io/skewt-meteogram-web/demo.html)
 ![demo](demo.gif)
 
+[DEMO] (https://hunter3789.github.io/skewt-meteogram-web/meteogram.html)
+![demo](meteogram.gif)
+
 ## Installation and setup
 
-- Quick use:
+- Quick use - Skew-T:
 
 ```js
 <link rel="stylesheet" href="[path to css]/skewt.css" />
-<script src="[path to js]/SkewT.js.js"></script>
-<script src="[path to js]/skewt_function.js.js"></script>
+<script src="[path to js]/SkewT.js"></script>
+<script src="[path to js]/skewt_function.js"></script>
+```
+
+- Quick use - Meteogram:
+
+```js
+<link rel="stylesheet" href="[path to css]/skewt.css" />
+<script src="[path to js]/SkewT.js"></script>
+<script src="[path to js]/skewt_function.js"></script>
+<script src="[path to js]/meteogram.js"></script>
 ```
 
 ## Usage - Skew-T
@@ -58,7 +71,21 @@ var skewt = new SkewT(chartContainer, tooltipContainer, tableContainer, overlays
 skewt.plot(s, drawIndices, useEdit);
 ```
 
-## Data (example)
+## Usage - Meteogram
+**Initializes a dynamic Meteogram**
+```
+/**
+* Initializes a dynamic Skew-T Log-P diagram visualizer.
+* @param {Array<Object>} ds - Meteogram dataset containing forecast/valid times and vertical profile data.
+* @param {string|HTMLElement} timebarContainer - Container element or ID for the time navigation bar.
+* @param {string|HTMLElement} chartContainer - Container element or ID where the meteogram chart will be rendered.
+* @param {string|HTMLElement} skewTimeContainer - Container element or ID for the selected Skew-T valid time display.
+* @param {string|HTMLElement} skewImageContainer - Container element or ID where the Skew-T image/overlay will be rendered.
+**/
+var meteogram = new mto(ds, timebarContainer, chartContainer, skewTimeContainer, skewImageContainer); 
+```
+
+## Data for Skew-T (example)
 ```
 [
   {
@@ -90,6 +117,46 @@ skewt.plot(s, drawIndices, useEdit);
     // thermodynamic indices
     "indices": {}
   }
+]
+```
+
+## Data for Meteogram (example)
+```
+[
+    {
+        "tm_fc": "2026060421", // issue time
+        "tm_ef": "2026060421", // valid time
+        "fcstime": 0,          // forecast lead time (hour)
+        "data": [
+            {
+                "pres": "SFC", // pressure level (hPa or mb)
+                "rn": 0        // precipitation (mm)
+            },
+            {
+                "pres": 1000, // pressure level (hPa or mb)
+                "ta": 19.9,   // temperature (celsius)
+                "td": 18.8,   // dew-point temperature (celsius)
+                "vec": 241.8, // wind vector (degree)
+                "wsd": 1.5,   // wind speed (m/s)
+                "gh": 19.1    // geopotential height (gpm) (optional)
+            },
+            ...,
+            {
+                "pres": 100,
+                "ta": -65.4,
+                "td": -81.7,
+                "vec": 258.3,
+                "wsd": 31.4,
+                "gh": 16546.2
+            }
+        ]
+    },
+    {
+        "tm_fc": "2026060421",
+        "tm_ef": "2026060422",
+        "fcstime": 1,
+        "data": [...]
+    }
 ]
 ```
 
