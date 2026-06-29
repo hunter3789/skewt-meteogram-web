@@ -16,6 +16,7 @@
     html,
     body {
       height: 95%;
+      width: 100%;
       margin: 0px;
       padding: 0px;
       color: #222;
@@ -54,7 +55,6 @@
 <body onload='fnBodyResize();' onresize='fnBodyResize();' onscroll='fnScroll();'>
   <div id=main_container style="margin-top:4px;">
     <div id=mto_container style='display:flex;'>
-      <div style='min-width:10px;'></div>
       <div>
         <div id=mto_timediv style='position:relative; z-index:200;'></div>
         <div id=mto_chartdiv style='position:relative; overflow-y:auto; overflow-x:hidden;'></div>
@@ -118,7 +118,7 @@
 
       document.getElementById('main_container')
       if (window.innerWidth > 1200) {
-        document.getElementById('mto_chartdiv').style.width = (window.innerWidth - 445) + "px";
+        document.getElementById('mto_chartdiv').style.width = (window.innerWidth - 410) + "px";
         document.getElementById('mto_chartdiv').style.height = (window.innerHeight - 45) + "px";
         document.getElementById('mto_skew_container').style.position = "absolute";
         document.getElementById('mto_skew_container').style.right = "0px";   
@@ -130,7 +130,7 @@
         }        
       }
       else {
-        document.getElementById('mto_chartdiv').style.width = (window.innerWidth - 15) + "px";
+        document.getElementById('mto_chartdiv').style.width = (window.innerWidth - 20) + "px";
         document.getElementById('mto_chartdiv').style.height = (window.innerHeight - 45) + "px";
         document.getElementById('mto_skew_container').style.position = "absolute";
         document.getElementById('mto_skew_container').style.right = "0px";
