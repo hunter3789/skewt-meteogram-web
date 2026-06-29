@@ -52,8 +52,8 @@ var mto = function fnMtoDisp(ds, timebarContainer, chartContainer, skewTimeConta
   }
 
   //properties used in calculations
-  var margin = {top: 45, right: 60, bottom: 30, left: 50};
-  var marginNavi = {top: 20, right: 60, bottom: 20, left: 50};
+  var margin = {top: 45, right: 30, bottom: 30, left: 50};
+  var marginNavi = {top: 20, right: 30, bottom: 20, left: 50};
   var width = document.querySelector(chartContainer).offsetWidth - margin.left - margin.right;
   var height = [450, 120];
   var nchart = 2;
