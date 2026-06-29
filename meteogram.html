@@ -27,6 +27,28 @@
       font-size: 11px;
     }
 
+    #scrollUp,
+    #scrollDown {
+        position: fixed;
+        left: 5px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        font-size: 20px;
+        z-index: 1000;
+    }
+    
+    #scrollUp {
+        bottom: 80px;
+    }
+    
+    #scrollDown {
+        bottom: 20px;
+    }    
+
   </style>
 </head>
 
@@ -46,12 +68,28 @@
       <div id=mto_skew_image style='width:400px; border:2px solid white;'></div>
     </div>
   </div>
-
+  
+  <button id="scrollUp">▲</button>
+  <button id="scrollDown">▼</button>
 
   <script>
     var controlView = true;
     var mto_data;
 
+    document.getElementById("scrollUp").onclick = function () {
+        window.scrollBy({
+            top: -300,
+            behavior: "smooth"
+        });
+    };
+    
+    document.getElementById("scrollDown").onclick = function () {
+        window.scrollBy({
+            top: 300,
+            behavior: "smooth"
+        });
+    };    
+    
     fetch("https://hunter3789.github.io/skewt-meteogram-web/meteogram_data.json")
       .then(response => {
         if (!response.ok) {
