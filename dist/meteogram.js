@@ -1157,6 +1157,10 @@ var mto = function fnMtoDisp(ds, timebarContainer, chartContainer, skewTimeConta
   }
 
   function brushed(event){
+    context.select(".brush")
+      .select(".selection")
+      .attr("height", 18);
+
     if (isAdjustingBrush) return;
     if(event && event.type === "zoom") return; // ignore brush-by-zoom
     else {
