@@ -78,14 +78,14 @@
 
     document.getElementById("scrollUp").onclick = function () {
         document.getElementById("mto_chartdiv").scrollBy({
-            top: -300,
+            top: -50,
             behavior: "smooth"
         });
     };
     
     document.getElementById("scrollDown").onclick = function () {
         document.getElementById("mto_chartdiv").scrollBy({
-            top: 300,
+            top: 50,
             behavior: "smooth"
         });
     };    
@@ -135,8 +135,15 @@
         document.getElementById('mto_chartdiv').style.height = (window.innerHeight - 45) + "px";
         document.getElementById('mto_skew_container').style.position = "absolute";
         document.getElementById('mto_skew_container').style.right = "0px";
-        document.getElementById('mto_skew_container').style.bottom = "0px";           
-        document.getElementById('mto_skew_container').style.top = "";            
+
+        if (window.innerHeight > 360) {        
+          document.getElementById('mto_skew_container').style.bottom = "0px";           
+          document.getElementById('mto_skew_container').style.top = "";            
+        }
+        else {
+          document.getElementById('mto_skew_container').style.top = "0px";      
+          document.getElementById('mto_skew_container').style.bottom = "";            
+        }
 
         if (controlView) {        
           toggleControl();
