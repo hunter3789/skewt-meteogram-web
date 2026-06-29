@@ -87,6 +87,10 @@
         document.getElementById('mto_skew_container').style.position = "relative";
         document.getElementById('mto_skew_container').style.bottom = "0px";
         document.getElementById('mto_skew_container').style.right = "0px";
+
+        if (!controlView) {        
+          toggleControl();
+        }        
       }
       else {
         document.getElementById('main_container').style.display = "block";
@@ -95,6 +99,10 @@
         document.getElementById('mto_skew_container').style.position = "absolute";
         document.getElementById('mto_skew_container').style.bottom = "0px";
         document.getElementById('mto_skew_container').style.right = "0px";
+
+        if (controlView) {        
+          toggleControl();
+        }
       }
 
       if (mto_data != undefined) {
