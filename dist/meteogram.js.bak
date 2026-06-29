@@ -825,7 +825,7 @@ var mto = function fnMtoDisp(ds, timebarContainer, chartContainer, skewTimeConta
     ctx.lineWidth = 2;
     ctx.setLineDash([4,2]);
     ctx.beginPath();
-    ctx.moveTo(margin.left + width - 60, margin.top-22);
+    ctx.moveTo(margin.left + width - 65, margin.top-22);
     ctx.lineTo(margin.left + width - 45, margin.top-22);
     ctx.strokeStyle = "green";
     ctx.stroke();
