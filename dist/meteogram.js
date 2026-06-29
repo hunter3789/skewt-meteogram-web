@@ -740,8 +740,9 @@ var mto = function fnMtoDisp(ds) {
     ctx.strokeStyle = "black";    
     ctx.beginPath();
     ticks.forEach(function(d) {
-      ctx.moveTo(margin.left, yScale1(d)+margin.top);
-      ctx.lineTo(width+margin.left, yScale1(d)+margin.top);
+      var y = Math.round(yScale1(d) + margin.top) + 0.5;      
+      ctx.moveTo(margin.left, y);
+      ctx.lineTo(width+margin.left, y);
     });
     ctx.stroke();
 
