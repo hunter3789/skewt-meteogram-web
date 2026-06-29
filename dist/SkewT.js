@@ -1068,7 +1068,6 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
     function displayTable(selectedIndex) {
       if (tableContainer != undefined) {
         var d = clonedData[selectedIndex].indices;
-		console.log(clonedData[selectedIndex]);
         var item = document.getElementById("skew-table");
         while (item.hasChildNodes()) {
           item.removeChild(item.childNodes[0]);

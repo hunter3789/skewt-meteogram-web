@@ -1,32 +1,50 @@
 /**
- * 
- * Dependency:
- * d3.v3.min.js from https://d3js.org/
- * 
+ * Meteogram Viewer
+ *
+ * Dependencies:
+ * - D3.js v7: https://d3js.org/
+ * - MarchingSquares.js: https://github.com/RaumZeit/MarchingSquares.js
+ *
+ * Developed by ChangJae Lee
+ *
+ * Features:
+ * - Meteogram visualization of vertical temperature, wind, dew-point depression, and precipitation.
+ * - Interactive time navigation with brush, zoom, and pan controls.
+ * - Mobile- and web-optimized user experience.
+ * - Skew-T log-P diagram overlay support.
+ *
+ * Initializes a dynamic meteogram visualizer.
+ *
+ * @param {Array<Object>} ds - Meteogram dataset containing forecast/valid times and vertical profile data.
+ * @param {string|HTMLElement} timebarContainer - Container element or ID for the time navigation bar.
+ * @param {string|HTMLElement} chartContainer - Container element or ID where the meteogram chart will be rendered.
+ * @param {string|HTMLElement} skewTimeContainer - Container element or ID for the selected Skew-T valid time display.
+ * @param {string|HTMLElement} skewImageContainer - Container element or ID where the Skew-T image/overlay will be rendered.
  */
-
-/**
-* Initializes a dynamic Skew-T Log-P diagram visualizer.
-* @param {string|HTMLElement} chartContainer - The container element or ID where the Skew-T chart will be rendered.
-* @param {string|HTMLElement} tooltipContainer - The container element or ID for the interactive hover data.
-* @param {number} [overlays=1] - The number of sounding profiles to overlay on a single diagram.
-* @param {boolean} [showMenu=true] - Toggle to enable/disable the advanced menu panel (thermodynamic indices, manual sounding editor, reset controls).
-**/
-var mto = function fnMtoDisp(ds) {
-  var item = document.getElementById("mto_chartdiv");
-  while (item.hasChildNodes()) {
-    item.removeChild(item.childNodes[0]);
+var mto = function fnMtoDisp(ds, timebarContainer, chartContainer, skewTimeContainer, skewImageContainer) {
+  if (timebarContainer != undefined) {
+    var item = document.querySelector(timebarContainer);
+    while (item.hasChildNodes()) {
+      item.removeChild(item.childNodes[0]);
+    }
   }
 
-  var item = document.getElementById("mto_timediv");
-  while (item.hasChildNodes()) {
-    item.removeChild(item.childNodes[0]);
+  if (chartContainer != undefined) {
+    var item = document.querySelector(chartContainer);
+    while (item.hasChildNodes()) {
+      item.removeChild(item.childNodes[0]);
+    }
   }
 
-  document.getElementById("mto_skew_time").innerText = "";
-  var item = document.getElementById("mto_skew_image");
-  while (item.hasChildNodes()) {
-    item.removeChild(item.childNodes[0]);
+  if (skewTimeContainer != undefined) {
+    document.querySelector(skewTimeContainer).innerText = "";
+  }
+
+  if (skewImageContainer != undefined) {
+    var item = document.querySelector(skewImageContainer);
+    while (item.hasChildNodes()) {
+      item.removeChild(item.childNodes[0]);
+    }
   }
 
   if (ds.length == 0) {
@@ -36,7 +54,7 @@ var mto = function fnMtoDisp(ds) {
   //properties used in calculations
   var margin = {top: 45, right: 60, bottom: 30, left: 70};
   var marginNavi = {top: 20, right: 60, bottom: 20, left: 70};
-  var width = document.getElementById("mto_chartdiv").offsetWidth - margin.left - margin.right;
+  var width = document.querySelector(chartContainer).offsetWidth - margin.left - margin.right;
   var height = [450, 120];
   var nchart = 2;
   var parseTime = d3.timeParse("%Y%m%d%H");
@@ -95,7 +113,7 @@ var mto = function fnMtoDisp(ds) {
     .tickFormat(d3.timeFormat("%m.%d."));
 
   // time navigator
-  var context = d3.select("#mto_timediv").append("div").append("svg")
+  var context = d3.select(timebarContainer).append("div").append("svg")
                   .attr("width",width+marginNavi.left+marginNavi.right)
                   .attr("height",20+marginNavi.top)
                   .style("z-index",200)
@@ -116,7 +134,7 @@ var mto = function fnMtoDisp(ds) {
          .call(brush.move,xscaleNavi.range());    
 
   // tooltip
-  var tooltip = d3.select("#mto_chartdiv").append("div")
+  var tooltip = d3.select(chartContainer).append("div")
   .style("position","absolute")
   .style("font-weight","bold")
   .style("padding","2px 6px 2px 6px")
@@ -136,7 +154,7 @@ var mto = function fnMtoDisp(ds) {
     marginChart[i] = margin;
         
     //create canvas
-    canvas[i] = d3.select("#mto_chartdiv").append("div").attr("id","mto_canvas_" + i)
+    canvas[i] = d3.select(chartContainer).append("div").attr("id","mto_canvas_" + i)
                   .append("canvas")
                   .attr("width",width+margin.left+margin.right)
                   .attr("height",height[i]+margin.top+margin.bottom); 
@@ -185,12 +203,14 @@ var mto = function fnMtoDisp(ds) {
     //})
   }
 
-  if (mto_skewt == undefined) {
-    mto_skewt = new SkewT('#mto_skew_image', undefined, undefined, 1);
-  }
-  else {
-    mto_skewt.resize();
-    mto_skewt.clear();
+  if (skewImageContainer != undefined) {
+    if (mto_skewt == undefined) {
+      mto_skewt = new SkewT(skewImageContainer, undefined, undefined, 1);
+    }
+    else {
+      mto_skewt.resize();
+      mto_skewt.clear();
+    }
   }
 
   // Wind Barb
@@ -619,6 +639,27 @@ var mto = function fnMtoDisp(ds) {
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
 
+    //add legend
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(5, 4);
+    ctx.lineTo(20, 4);
+    ctx.strokeStyle = "red";
+    ctx.stroke();
+
+    ctx.font = "650 12px Arial";
+    ctx.fillText("Temp. (℃)", 25, 2);
+
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(5, 20);
+    ctx.lineTo(20, 20);
+    ctx.strokeStyle = "green";
+    ctx.stroke();
+
+    ctx.font = "650 12px Arial";
+    ctx.fillText("T-Td < 6℃", 25, 18);
+
     return;
   }
 
@@ -761,6 +802,10 @@ var mto = function fnMtoDisp(ds) {
     ctx.fillText("(mm)", 25, margin.top+height+20);
     ctx.fillText("precip.", 25, margin.top-20);
 
+    ctx.fillStyle = "skyblue";
+    ctx.fillRect(8, margin.top-25, 10, 10);
+    ctx.fillStyle = "black";
+
     ticks = d3.range(0,ymax2+0.1,ymax2/5);
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
@@ -776,6 +821,15 @@ var mto = function fnMtoDisp(ds) {
     ctx.textAlign = "right";
     ctx.fillText("(mm)", margin.left + width + 30, margin.top+height+20);
     ctx.fillText("Total precip.", margin.left + width + 30, margin.top-20);
+
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4,2]);
+    ctx.beginPath();
+    ctx.moveTo(margin.left + width - 65, margin.top-22);
+    ctx.lineTo(margin.left + width - 45, margin.top-22);
+    ctx.strokeStyle = "green";
+    ctx.stroke();
+    ctx.setLineDash([]);
 
     //add x axis
     if (scale*36 < 100) {
@@ -911,9 +965,15 @@ var mto = function fnMtoDisp(ds) {
       drawHover(i, hoverCtx[i], width, height[i], marginChart[i], x, n);
     }
 
-    document.getElementById("mto_skew_time").innerText = "[ " + ds[n].tm_ef.substring(0,4) + ". " + ds[n].tm_ef.substring(4,6) + ". " + ds[n].tm_ef.substring(6,8) + ". " + ds[n].tm_ef.substring(8,10) + ":00 (+" + (parseTime(ds[n].tm_ef) - parseTime(ds[n].tm_fc))/(60*60*1000) + "h) ]";
-    var skew_data = [{"variables": ds[n].data, "indices": {}}]
-    mto_skewt.plot(skew_data);
+    if (skewTimeContainer != undefined) {
+      document.querySelector(skewTimeContainer).innerText = "[ " + ds[n].tm_ef.substring(0,4) + ". " + ds[n].tm_ef.substring(4,6) + ". " + ds[n].tm_ef.substring(6,8) + ". " + ds[n].tm_ef.substring(8,10) + ":00 (+" + (parseTime(ds[n].tm_ef) - parseTime(ds[n].tm_fc))/(60*60*1000) + "h) ]";
+    }
+
+    if (skewImageContainer != undefined) {
+      var skew_data = [{"variables": ds[n].data, "indices": {}}]
+      mto_skewt.plot(skew_data);
+    }
+
     return;
   }
 
