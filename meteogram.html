@@ -53,7 +53,7 @@
 </head>
 
 <body onload='fnBodyResize();' onresize='fnBodyResize();' onscroll='fnScroll();'>
-  <div id=main_container style="display:block; margin-top:4px;">
+  <div id=main_container style="margin-top:4px;">
     <div id=mto_container style='display:flex;'>
       <div style='min-width:10px;'></div>
       <div>
@@ -119,7 +119,6 @@
 
       document.getElementById('main_container')
       if (window.innerWidth > 1200) {
-        document.getElementById('main_container').style.display = "flex";
         document.getElementById('mto_chartdiv').style.width = (window.innerWidth - 435) + "px";
         document.getElementById('mto_chartdiv').style.height = (window.innerHeight - 45) + "px";
         document.getElementById('mto_skew_container').style.position = "absolute";
@@ -131,7 +130,6 @@
         }        
       }
       else {
-        document.getElementById('main_container').style.display = "block";
         document.getElementById('mto_chartdiv').style.width = (window.innerWidth - 5) + "px";
         document.getElementById('mto_chartdiv').style.height = (window.innerHeight - 45) + "px";
         document.getElementById('mto_skew_container').style.position = "absolute";
