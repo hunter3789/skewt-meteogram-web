@@ -737,12 +737,12 @@ var mto = function fnMtoDisp(ds) {
     ctx.font = "650 12px Arial";
     ticks = d3.range(0,ymax1+0.1,ymax1/5);
     ctx.lineWidth = 0.2;
+    ctx.strokeStyle = "black";    
     ctx.beginPath();
     ticks.forEach(function(d) {
       ctx.moveTo(margin.left, yScale1(d)+margin.top);
       ctx.lineTo(width+margin.left, yScale1(d)+margin.top);
     });
-    ctx.strokeStyle = "black";
     ctx.stroke();
 
     ctx.textAlign = "right";
