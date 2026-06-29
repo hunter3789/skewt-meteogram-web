@@ -77,14 +77,14 @@
     var mto_data;
 
     document.getElementById("scrollUp").onclick = function () {
-        window.scrollBy({
+        document.getElementById("mto_chartdiv").scrollBy({
             top: -300,
             behavior: "smooth"
         });
     };
     
     document.getElementById("scrollDown").onclick = function () {
-        window.scrollBy({
+        document.getElementById("mto_chartdiv").scrollBy({
             top: 300,
             behavior: "smooth"
         });
