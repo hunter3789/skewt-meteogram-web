@@ -616,21 +616,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
           var skewtline2 = clonedData[idx].variables.filter(function(d) { return (d.ta > -999 && d.td > -999 && ((d.pres != "SFC" && d.pres >= 300) || (d.pres == "SFC" && d.ps != undefined && d.ps > 1000))); });
           var skewtlines2 = [];
           skewtlines2.push(skewtline2);
-
-          // wet-bulb temperature
-          calcTw(clonedData[idx].variables);
-
-          if (cnt == 1) {
-            var twline = d3.line().x(function(d,i) { if (d.pres != "SFC") return x(d.tw) + (y(basep)-y(d.pres))/tan; else return x(d.tw) + (y(basep)-y(d.ps))/tan; })
-                                  .y(function(d,i) { if (d.pres != "SFC") return y(d.pres); else return y(d.ps); });
-            var twlines = skewtgroup.selectAll("twlines")
-                .data(skewtlines2).enter().append("path")
-                .attr("stroke", "black")
-                .attr("class", "tw")
-                .attr("clip-path", "url(#clipper)")
-                .attr("d", twline);
-          }
-        
+       
           var templine = d3.line().x(function(d,i) { if (d.pres != "SFC") return x(d.ta) + (y(basep)-y(d.pres))/tan; else return x(d.ta) + (y(basep)-y(d.ps))/tan; })
                                   .y(function(d,i) { if (d.pres != "SFC") return y(d.pres); else return y(d.ps); });
           var templines = skewtgroup.selectAll("templines")
@@ -717,6 +703,20 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
             d.td = parseFloat(dtmp.td) - (parseFloat(dtmp.td) - parseFloat(dset[0].td))/(parseFloat(dtmp.pres) - parseFloat(dset[0].pres)) * (parseFloat(dtmp.pres) - parseFloat(clonedData[idx].indices.tmpBase));
             d.gh = -999.;
             dset.unshift(d);
+          }
+
+          // wet-bulb temperature
+          calcTw(dset);
+
+          if (cnt == 1) {
+            var twline = d3.line().x(function(d,i) { if (d.pres != "SFC") return x(d.tw) + (y(basep)-y(d.pres))/tan; else return x(d.tw) + (y(basep)-y(d.ps))/tan; })
+                                  .y(function(d,i) { if (d.pres != "SFC") return y(d.pres); else return y(d.ps); });
+            var twlines = skewtgroup.selectAll("twlines")
+                .data(skewtlines2).enter().append("path")
+                .attr("stroke", "black")
+                .attr("class", "tw")
+                .attr("clip-path", "url(#clipper)")
+                .attr("d", twline);
           }
 
           //skewT base
@@ -1068,6 +1068,7 @@ var SkewT = function(chartContainer, tooltipContainer, tableContainer, overlays 
     function displayTable(selectedIndex) {
       if (tableContainer != undefined) {
         var d = clonedData[selectedIndex].indices;
+		console.log(clonedData[selectedIndex]);
         var item = document.getElementById("skew-table");
         while (item.hasChildNodes()) {
           item.removeChild(item.childNodes[0]);
