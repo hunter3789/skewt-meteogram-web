@@ -549,7 +549,7 @@ var mto = function fnMtoDisp(ds) {
     var yAxis = d3.axisLeft(yScale).tickSize(-width);
     var ticks = yAxis.tickValues(pa_domain);
     var tickSize = -width;
-    ctx.lineWidth = 0.2;
+    ctx.lineWidth = 0.5;
     ctx.beginPath();
     yAxis_domain.forEach(function(d) {
       ctx.moveTo(margin.left, yScale(d)+margin.top);
@@ -586,7 +586,7 @@ var mto = function fnMtoDisp(ds) {
 
     var tickSize = -width;
     var tickFormat;
-    ctx.lineWidth = 0.2;
+    ctx.lineWidth = 0.5;
     ctx.beginPath();
     ticks.forEach(function(d) {
       ctx.moveTo(xScale(d)+margin.left, height+margin.top);
@@ -736,7 +736,7 @@ var mto = function fnMtoDisp(ds) {
     //add y axis
     ctx.font = "650 12px Arial";
     ticks = d3.range(0,ymax1+0.1,ymax1/5);
-    ctx.lineWidth = 0.2;
+    ctx.lineWidth = 0.5;
     ctx.strokeStyle = "black";    
     ctx.beginPath();
     ticks.forEach(function(d) {
@@ -799,7 +799,7 @@ var mto = function fnMtoDisp(ds) {
 
     var tickSize = -width;
     var tickFormat;
-    ctx.lineWidth = 0.2;
+    ctx.lineWidth = 0.5;
     ctx.beginPath();
     ticks.forEach(function(d) {
       ctx.moveTo(xScale(d)+margin.left, height+margin.top);
