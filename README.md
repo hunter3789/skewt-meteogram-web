@@ -9,14 +9,14 @@ Original Core Architecture v1.1.0 (2016) by David Felix
 Also inspired by SHARPpy.
 - [Document] (https://sharppy.github.io/SHARPpy/index.html)
  
-📊 Skew-T: Refactoring & Features Update (2022 - 2026) by ChangJae Lee
+📊 **Skew-T: Refactoring & Features Update (2022 - 2026) by ChangJae Lee**
 - Background Grid: Expanded dry/moist adiabats and Mixing Ratio lines.
 - Thermodynamics Engine: Computed and rendered severe weather indicators (i.e., CAPE, CIN, LFC, EL, LCL, CCL).
 - Multi-Profile Overlay: Supported rendering and comparing multiple sounding diagrams simultaneously.
 - Dynamic Sounding Editor: Enabled real-time interactive adjustments of base height, temperature, and dewpoint to instantly visualize stability shifts.
 - Mobile & Web UX: Optimized tooltips, Zoom and panning.
 
-🌦️ Meteogram Viewer (new!!)
+🌦️ **Meteogram Viewer (new!!)**
 - Meteogram visualization of vertical temperature, wind, dew-point depression, and precipitation.
 - Interactive time navigation with brush, zoom, and pan controls.
 - Mobile- and web-optimized user experience.
