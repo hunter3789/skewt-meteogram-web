@@ -41,7 +41,7 @@ var mto = function fnMtoDisp(ds) {
   var nchart = 2;
   var parseTime = d3.timeParse("%Y%m%d%H");
   var canvas = [], ctx = [], hoverCanvas = [], hoverCtx = [], marginChart = [], zoom = [];
-  var domain1, domain2;
+  var domain1, domain2, line_tm1, line_tm2;
   var transform = {x:0, y:0, k:0};
   var DEGRAD = Math.PI/180;
   var mto_skewt;
@@ -499,6 +499,9 @@ var mto = function fnMtoDisp(ds) {
       ctx.lineWidth = 1;
       ctx.fillStyle = "black";
       for (var i=0; i<ds.length; i++) {
+        if (ds[i].tm_ef < line_tm1 || ds[i].tm_ef > line_tm2) {
+          continue;
+        }
 
         if (scale*16 < barbsize) {
           if (parseInt(d3.timeFormat("%H")(parseTime(ds[i].tm_ef))) % 24 != 9 || parseInt(d3.timeFormat("%d")(parseTime(ds[i].tm_ef))) % 2 != 0) {
@@ -640,6 +643,10 @@ var mto = function fnMtoDisp(ds) {
 
     var init = true, prevTm = 0, rn_sum = 0;
     ds.forEach(function(d) {
+      if (d.tm_ef < line_tm1 || d.tm_ef > line_tm2) {
+        return;
+      }
+
       if (init) {
         rn_sum += d.data[0].rn;
         rn.push({"tm_ef": parseTime(d.tm_ef), "rn": d.data[0].rn, "rn_sum": rn_sum});
@@ -895,13 +902,16 @@ var mto = function fnMtoDisp(ds) {
       }
     }
 
+    if (newArr[n].tm_ef < line_tm1 || newArr[n].tm_ef > line_tm2) {
+      return;
+    }
+
     for (var i=0; i<nchart; i++) {
       drawHover(i, hoverCtx[i], width, height[i], marginChart[i], x, n);
     }
 
     document.getElementById("mto_skew_time").innerText = "[ " + ds[n].tm_ef.substring(0,4) + ". " + ds[n].tm_ef.substring(4,6) + ". " + ds[n].tm_ef.substring(6,8) + ". " + ds[n].tm_ef.substring(8,10) + ":00 (+" + (parseTime(ds[n].tm_ef) - parseTime(ds[n].tm_fc))/(60*60*1000) + "h) ]";
     var skew_data = [{"variables": ds[n].data, "indices": {}}]
-    //console.log(skew_data);
     mto_skewt.plot(skew_data);
     return;
   }
@@ -967,6 +977,10 @@ var mto = function fnMtoDisp(ds) {
 
       var init = true, prevTm = 0, rn_sum = 0, itv_hover = 0, rn_hover = 0;
       ds.forEach(function(d) {
+        if (d.tm_ef < line_tm1 || d.tm_ef > line_tm2) {
+          return;
+        }
+
         if (init) {
           rn_sum += d.data[0].rn;
           rn.push({"tm_ef": parseTime(d.tm_ef), "rn": d.data[0].rn, "rn_sum": rn_sum});
@@ -1027,7 +1041,9 @@ var mto = function fnMtoDisp(ds) {
       ctx.arc(margin.left+xScale(parseTime(ds[n].tm_ef)),margin.top + yScale2(rn_hover),radius,0,2*Math.PI);
       ctx.fill();
 
-      var text = "[ " + ds[0].tm_ef.substring(4,6) + ". " + ds[0].tm_ef.substring(6,8) + ". " + ds[0].tm_ef.substring(8,10) + ":00 - ";
+      var tm1 = new Date(); tm1.setTime(rn[0].tm_ef.getTime());
+      var rn_tm1 = addZeros(tm1.getFullYear(),4) + addZeros(tm1.getMonth()+1,2) + addZeros(tm1.getDate(),2) + addZeros(tm1.getHours(),2) + addZeros(tm1.getMinutes(),2);
+      var text = "[ " + rn_tm1.substring(4,6) + ". " + rn_tm1.substring(6,8) + ". " + rn_tm1.substring(8,10) + ":00 - ";
       text += ds[n].tm_ef.substring(4,6) + ". " + ds[n].tm_ef.substring(6,8) + ". " + ds[n].tm_ef.substring(8,10) + ":00 ]";
 
 
@@ -1070,6 +1086,7 @@ var mto = function fnMtoDisp(ds) {
     transform = event.transform;
     domain1.setTime(event.transform.rescaleX(xscaleNavi).domain()[0]);
     domain2.setTime(event.transform.rescaleX(xscaleNavi).domain()[1]); 
+    calcAxis();
 
     drawMtoGraph(ctx[0], width, height[0], margin);
     drawGraph(ctx[1], width, height[1], margin);
@@ -1104,6 +1121,7 @@ var mto = function fnMtoDisp(ds) {
         domain2 = xscaleNavi.invert(event.selection[1]);
       }
 
+      calcAxis();
       xScale.domain([domain1, domain2]);
       transform.k = (date2 - date1) / (domain2 - domain1);
       transform.x = width * (date1 - domain1) / (date2 - date1) * transform.k;
@@ -1113,4 +1131,22 @@ var mto = function fnMtoDisp(ds) {
     }
   }
   
+  function calcAxis() {
+    var tm1 = new Date(); tm1.setTime(domain1.getTime() - 6*60*60*1000);
+    var tm2 = new Date(); tm2.setTime(domain2.getTime() + 6*60*60*1000);
+
+    line_tm1 = addZeros(tm1.getFullYear(),4) + addZeros(tm1.getMonth()+1,2) + addZeros(tm1.getDate(),2) + addZeros(tm1.getHours(),2) + addZeros(tm1.getMinutes(),2);
+    line_tm2 = addZeros(tm2.getFullYear(),4) + addZeros(tm2.getMonth()+1,2) + addZeros(tm2.getDate(),2) + addZeros(tm2.getHours(),2) + addZeros(tm2.getMinutes(),2);
+  }
+
+  function addZeros(num, digit) {
+    var zero = '';
+    num = num.toString();
+    if (num.length < digit) {
+      for (var i=0; i < digit - num.length; i++) {
+        zero += '0'
+      }
+    }
+    return zero + num;
+  }
 }
