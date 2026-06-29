@@ -50,6 +50,7 @@
 
   <script>
     var controlView = true;
+    var mto_data;
 
     fetch("https://hunter3789.github.io/skewt-meteogram-web/meteogram_data.json")
       .then(response => {
@@ -60,7 +61,8 @@
       })
       .then(data => {
         console.log(data);
-        mto(data); 
+        mto_data = data;
+        mto(mto_data); 
       })
       .catch(error => {
         console.error(error);
@@ -95,8 +97,8 @@
         document.getElementById('mto_skew_container').style.right = "0px";
       }
 
-      if (data != undefined) {
-        mto(data); 
+      if (mto_data != undefined) {
+        mto(mto_data); 
       }
     }
 
