@@ -60,6 +60,7 @@
       })
       .then(data => {
         console.log(data);
+        mto(data); 
       })
       .catch(error => {
         console.error(error);
@@ -94,7 +95,9 @@
         document.getElementById('mto_skew_container').style.right = "0px";
       }
 
-      mto(data); 
+      if (data != undefined) {
+        mto(data); 
+      }
     }
 
     function fnScroll() {
