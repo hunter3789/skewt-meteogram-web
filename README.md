@@ -78,7 +78,7 @@ skewt.plot(s, drawIndices, useEdit);
 ```
 
 ## Usage - Meteogram
-**Initializes a dynamic Meteogram**
+**Initializes and renders a dynamic Meteogram**
 ```
 /**
 * Initializes a dynamic Skew-T Log-P diagram visualizer.
